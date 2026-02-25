@@ -1,0 +1,64 @@
+# ============================================================
+# .gitignore - Dataiku DSS VS Code Project
+# ============================================================
+
+# --- SECURITE : Ne jamais committer ---
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+secrets/
+credentials/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-log.txt
+
+# --- VS Code ---
+.vscode/settings.json.local
+# Conserver : .vscode/extensions.json et .vscode/settings.json (sans secrets)
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# --- Données sensibles ---
+data/raw/
+data/outputs/
+*.csv
+*.parquet
+*.json
+!data/samples/*.json
+
+# --- Logs ---
+logs/
+*.log
+*.log.*
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Tests ---
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# --- Mypy / Linting ---
+.mypy_cache/
+.ruff_cache/

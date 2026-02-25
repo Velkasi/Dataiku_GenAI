@@ -1,0 +1,34 @@
+[project]
+name = "dataiku-vscode-project"
+version = "0.1.0"
+description = "Connexion VS Code ↔ Dataiku DSS via API"
+requires-python = ">=3.10"
+dependencies = [
+    "dataiku-api-client>=12.0.0",
+    "python-dotenv>=1.0.0",
+    "pandas>=2.0.0",
+    "pyarrow>=14.0.0",
+    "requests>=2.31.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.3.0",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*" = ["T201"]   # Autorise print() dans les scripts
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"

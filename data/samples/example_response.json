@@ -1,0 +1,25 @@
+{
+  "_comment": "Exemple de réponse API Dataiku DSS — list_projects()",
+  "projects": [
+    {
+      "projectKey": "SALES_ANALYSIS",
+      "name": "Analyse des ventes",
+      "ownerLogin": "alice",
+      "creationTag": {
+        "versionNumber": 1,
+        "lastModifiedBy": {"login": "alice"},
+        "lastModifiedOn": 1700000000000
+      }
+    },
+    {
+      "projectKey": "CHURN_MODEL",
+      "name": "Modèle de churn client",
+      "ownerLogin": "bob",
+      "creationTag": {
+        "versionNumber": 3,
+        "lastModifiedBy": {"login": "bob"},
+        "lastModifiedOn": 1710000000000
+      }
+    }
+  ]
+}
