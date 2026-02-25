@@ -1,0 +1,35 @@
+### Fichier REST Client — Test direct de l'API Dataiku DSS
+### Extension requise : humao.rest-client
+### Remplacez {{host}} et {{api_key}} par vos valeurs (ou configurez dans .vscode/settings.json)
+
+@host = https://dss.mondomaine.local
+@api_key = votre_api_key_ici
+@project_key = MON_PROJET
+
+### Vérification de l'authentification
+GET {{host}}/api/v1/auth/info
+Authorization: Basic {{api_key}}
+
+###
+
+### Liste des projets
+GET {{host}}/api/v1/projects/
+Authorization: Basic {{api_key}}
+
+###
+
+### Détails d'un projet
+GET {{host}}/api/v1/projects/{{project_key}}/
+Authorization: Basic {{api_key}}
+
+###
+
+### Liste des datasets d'un projet
+GET {{host}}/api/v1/projects/{{project_key}}/datasets/
+Authorization: Basic {{api_key}}
+
+###
+
+### Schéma d'un dataset
+GET {{host}}/api/v1/projects/{{project_key}}/datasets/mon_dataset/
+Authorization: Basic {{api_key}}
