@@ -11,6 +11,7 @@ from functools import lru_cache
 from typing import Optional
 
 import dataikuapi
+from dataikuapi.dss.project import DSSProject
 from dotenv import load_dotenv
 
 # Charger le fichier .env depuis la racine du projet
@@ -86,7 +87,7 @@ def get_client() -> dataikuapi.DSSClient:
     return client
 
 
-def get_project(project_key: Optional[str] = None) -> dataikuapi.DSSProject:
+def get_project(project_key: Optional[str] = None) -> DSSProject:
     """
     Retourne un objet projet Dataiku.
 

@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  dataiku-chatbot:
+    # Nom du conteneur
+    container_name: dataiku-workflow-chatbot
+
+    # Build depuis le Dockerfile local
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - BUILDKIT_INLINE_CACHE=1
+
+    # Nom de l'image
+    image: dataiku-chatbot:latest
+
+    # Redémarrage automatique
+    restart: unless-stopped
+
+    # Port mapping (host:container)
+    ports:
+      - "8501:8501"
+
+    # Variables d'environnement (depuis .env)
+    env_file:
+      - .env
+
+    # Variables d'environnement supplémentaires
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+      - STREAMLIT_SERVER_HEADLESS=true
+      - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+      - PYTHONUNBUFFERED=1
+
+    # Volumes (optionnel - pour persister les données ou logs)
+    volumes:
+      # Volume pour les logs (optionnel)
+      - ./logs:/app/logs
+      # Volume pour la config Streamlit (optionnel)
+      # - ./streamlit_config:/app/.streamlit
+
+    # Healthcheck
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8501/_stcore/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    # Limites de ressources (ajustez selon vos besoins)
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+    # Réseau (optionnel - si vous avez d'autres services)
+    networks:
+      - dataiku-network
+
+    # Logs
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# Réseau personnalisé (optionnel)
+networks:
+  dataiku-network:
+    driver: bridge
+
+# Volumes nommés (optionnel - pour persister des données)
+volumes:
+  chatbot-logs:
+    driver: local

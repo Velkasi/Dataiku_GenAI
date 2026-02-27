@@ -58,6 +58,7 @@ desktop.ini
 .coverage
 htmlcov/
 .tox/
+CLAUDE.md
 
 # --- Mypy / Linting ---
 .mypy_cache/

@@ -1,0 +1,61 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation (pas nécessaire dans l'image)
+README.md
+QUICKSTART.md
+*.md
+
+# Scripts de lancement locaux
+start.bat
+start.sh
+
+# Logs
+*.log
+logs/
+
+# Env files (seront montés comme volumes)
+.env
+.env.local
+.env.*.local
+
+# Helm charts (pas dans l'image Docker)
+helm/
+
+# Docker files
+Dockerfile
+docker-compose.yml
+.dockerignore
+Makefile

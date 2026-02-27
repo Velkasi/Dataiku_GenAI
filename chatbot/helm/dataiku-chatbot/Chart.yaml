@@ -1,0 +1,19 @@
+apiVersion: v2
+name: dataiku-chatbot
+description: Dataiku Workflow Creator Chatbot with Claude AI
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - dataiku
+  - chatbot
+  - ai
+  - claude
+  - streamlit
+maintainers:
+  - name: Data Engineering Team
+    email: data-engineering@company.com
+home: https://github.com/yourcompany/dataiku-chatbot
+sources:
+  - https://github.com/yourcompany/dataiku-chatbot
+icon: https://streamlit.io/images/brand/streamlit-mark-color.png

@@ -1,0 +1,166 @@
+# Default values for dataiku-chatbot
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# ============================================================
+# Image Configuration
+# ============================================================
+image:
+  repository: dataiku-chatbot
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+# ============================================================
+# Service Account
+# ============================================================
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# ============================================================
+# Pod Configuration
+# ============================================================
+podAnnotations: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+
+# ============================================================
+# Service Configuration
+# ============================================================
+service:
+  type: ClusterIP
+  port: 8501
+  targetPort: 8501
+  annotations: {}
+
+# ============================================================
+# Ingress Configuration
+# ============================================================
+ingress:
+  enabled: false
+  className: "nginx"
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: dataiku-chatbot.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  #  - secretName: dataiku-chatbot-tls
+  #    hosts:
+  #      - dataiku-chatbot.example.com
+
+# ============================================================
+# Resources
+# ============================================================
+resources:
+  limits:
+    cpu: 2000m
+    memory: 2Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+# ============================================================
+# Autoscaling (HPA)
+# ============================================================
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+# ============================================================
+# Node Selector & Affinity
+# ============================================================
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# ============================================================
+# Environment Variables (from Secrets/ConfigMaps)
+# ============================================================
+env:
+  # Variables from ConfigMap
+  - name: STREAMLIT_SERVER_PORT
+    value: "8501"
+  - name: STREAMLIT_SERVER_ADDRESS
+    value: "0.0.0.0"
+  - name: STREAMLIT_SERVER_HEADLESS
+    value: "true"
+  - name: STREAMLIT_BROWSER_GATHER_USAGE_STATS
+    value: "false"
+
+# Secrets (à créer séparément avec kubectl)
+envFrom:
+  - secretRef:
+      name: dataiku-chatbot-secrets  # Contient ANTHROPIC_API_KEY, DSS_API_KEY, etc.
+
+# ============================================================
+# Persistence (optionnel)
+# ============================================================
+persistence:
+  enabled: false
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  # mountPath: /app/logs
+
+# ============================================================
+# Probes
+# ============================================================
+livenessProbe:
+  httpGet:
+    path: /_stcore/health
+    port: 8501
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  timeoutSeconds: 10
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /_stcore/health
+    port: 8501
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+# ============================================================
+# Replicas
+# ============================================================
+replicaCount: 1
+
+# ============================================================
+# ConfigMap pour fichiers de config supplémentaires
+# ============================================================
+configMap:
+  enabled: false
+  data: {}
